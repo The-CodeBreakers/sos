@@ -1,0 +1,71 @@
+🔋 3.7V Li-ion Battery
+                           |
+                           |
+                       +---▼---+
+                       | TP4056|
+                       |Charge |
+                       +---+---+
+                           |
+                     OUT+  |  OUT-
+                           |
+                           ▼
+                       +---+---+
+                       | MT3608 |  (Boost Converter)
+                       | Set 4V |
+                       +---+---+
+                           |
+                  4.0V OUT+  |  GND
+                           |
+                           ▼
+                     +------------+
+                     |  SIM800L   |
+                     |   GSM      |
+                     | VCC  ← 4V  |
+                     | GND  ← GND |
+                     | TX   → GPIO16 (ESP32)
+                     | RX   ← GPIO17 (ESP32)
+                     +------------+
+
+-----------------------------------------------------
+
+                +------------------+
+                |      ESP32       |
+                |------------------|
+                | 3.3V → GPS VCC   |
+                | GND  → Common GND|
+                | GPIO16 ← SIM TX  |
+                | GPIO17 → SIM RX  |
+                | GPIO4  ← GPS TX  |
+                | GPIO18 ← SOS Btn |
+                | GPIO19 → LED     |
+                | GPIO21 → Buzzer  |
+                +------------------+
+
+-----------------------------------------------------
+
+📍 GPS Neo-6M
+VCC → 3.3V (ESP32)
+GND → GND
+TX  → GPIO4
+RX  → (optional GPIO5)
+
+📍 SOS Button
+One leg → GPIO18
+Other leg → GND
+(Use INPUT_PULLUP)
+
+📍 LED
+Long leg → GPIO19 (via 220Ω resistor)
+Short leg → GND
+
+📍 Buzzer
++ → GPIO21
+– → GND
+
+-----------------------------------------------------
+
+⚠ VERY IMPORTANT:
+✔ All GND must be common
+✔ MT3608 output must be exactly 4.0V
+✔ Do NOT power ESP32 from MT3608
+✔ ESP32 powered via USB / 5V regulated input
